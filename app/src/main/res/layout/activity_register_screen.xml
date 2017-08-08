@@ -4,7 +4,7 @@
     android:id="@+id/activity_register_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_logo"
+    android:background="@drawable/background"
     tools:context="com.example.natashamendis.groceryapp.RegisterScreen">
 
     <LinearLayout
