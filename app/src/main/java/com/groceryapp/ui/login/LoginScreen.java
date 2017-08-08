@@ -8,7 +8,6 @@ import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
 import com.groceryapp.ui.ShellActivity;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginScreen extends BaseActivity {
