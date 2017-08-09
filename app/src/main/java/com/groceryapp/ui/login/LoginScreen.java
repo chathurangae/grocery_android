@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.groceryapp.R;
+import com.groceryapp.helpers.MarshMallowPermission;
 import com.groceryapp.ui.BaseActivity;
 import com.groceryapp.ui.ShellActivity;
 
@@ -17,6 +18,8 @@ public class LoginScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+        MarshMallowPermission permission = new MarshMallowPermission(this);
+        permission.checkRuntimePermissions();
         ButterKnife.bind(this);
     }
 
