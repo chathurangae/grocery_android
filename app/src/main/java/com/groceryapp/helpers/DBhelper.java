@@ -1,4 +1,4 @@
-package com.groceryapp.Controller;
+package com.groceryapp.helpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
