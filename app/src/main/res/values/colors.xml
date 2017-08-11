@@ -10,4 +10,14 @@
     <color name="blackColor">#000000</color>
     <color name="whiteColor">#fff</color>
     <color name="drawer_nav_background">#ef4836</color>
+
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+
+    <color name="feed_tab_background">#f7f7f7</color>
+    <color name="feed_tab_selected_background">#ef4836</color>
+    <color name="feed_tab_selected_text">#ffffff</color>
+    <color name="feed_tab_unselected_text">#494849</color>
+    <color name="feed_pending_dot">#ef4836</color>
+    <color name="feed_complete_dot">#79c735</color>
 </resources>

@@ -13,32 +13,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.LinearLayout;
-
 import android.widget.Toast;
-
 import com.google.zxing.Result;
-
 import com.groceryapp.R;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class QrFragment extends Fragment implements ZXingScannerView.ResultHandler {
 
-    private LinearLayout container;
+public class QrFragment extends Fragment
+        implements ZXingScannerView.ResultHandler {
 
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private LinearLayout mainContainer;
 
     public QrFragment() {
         // Required empty public constructor
+    }
+
+    public static QrFragment getInstance() {
+        QrFragment fragment=new QrFragment();
+        return fragment;
     }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -84,9 +82,9 @@ public class QrFragment extends Fragment implements ZXingScannerView.ResultHandl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_qr, container, false);
-        container = (LinearLayout) view.findViewById(R.id.container);
+        mainContainer = view.findViewById(R.id.container);
         mScannerView = new ZXingScannerView(getActivity());
-        container.addView(mScannerView);
+        mainContainer.addView(mScannerView);
         return view;
     }
 

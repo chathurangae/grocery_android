@@ -1,4 +1,4 @@
-package com.groceryapp.Model;
+package com.groceryapp.model;
 
 /**
  * Created by Natasha Mendis on 25-May-17.

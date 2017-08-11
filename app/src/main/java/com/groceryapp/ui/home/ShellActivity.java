@@ -1,4 +1,4 @@
-package com.groceryapp.ui;
+package com.groceryapp.ui.home;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,8 +14,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,7 +26,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.groceryapp.R;
+import com.groceryapp.ui.BaseActivity;
 import com.groceryapp.ui.login.LoginScreen;
+import com.groceryapp.ui.shopping_cart.CartFragment;
 import com.groceryapp.ui.shopping_cart.QrFragment;
 
 import java.util.ArrayList;
@@ -38,32 +42,16 @@ public class ShellActivity extends BaseActivity
 
     @BindView(R.id.category_tool_bar)
     Toolbar toolbar;
-
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-    /**
-     * The Navigation view.
-     */
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    /**
-     * The Toggle.
-     */
     ActionBarDrawerToggle toggle;
-    /**
-     * The Frame layout.
-     */
     @BindView(R.id.drawer_main_content)
     RelativeLayout frameLayout;
-
     View headerView;
-
     CircleImageView headerAvatar;
     TextView headerUsername;
-    private Fragment fragment = null;
-    /**
-     * The Menu.
-     */
     Menu menu;
     private boolean isDrawerLocked = false;
 
@@ -94,28 +82,30 @@ public class ShellActivity extends BaseActivity
             drawer.addDrawerListener(toggle);
             toggle.syncState();
         }
-        //startMainFragment();
+        loadMainContainer(new HomeFragment() , "Home","TAG1");
+
     }
 
-    public void startMainFragment() {
-        fragment = new QrFragment();
+    private void loadMainContainer(Fragment fragment,String title , String tag){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_container, fragment, "TAG1");
+        fragmentTransaction.replace(R.id.frame_container, fragment, tag);
         fragmentTransaction.commit();
-        getSupportActionBar().setTitle("BarCode Scanner");
+        getSupportActionBar().setTitle(title);
+        drawerClosed();
     }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_logOut) {
             signout();
         }
         if (id == R.id.nav_cart) {
-            startMainFragment();
+            loadMainContainer(new CartFragment(),"Shopping Cart" , "TAG2");
         }
         drawerClosed();
         return true;
@@ -131,5 +121,22 @@ public class ShellActivity extends BaseActivity
         Intent i = new Intent(this, LoginScreen.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Display display = getWindowManager().getDefaultDisplay();
+        if (display.getRotation() == Surface.ROTATION_90
+                || display.getRotation() == Surface.ROTATION_270) {
+
+            isDrawerLocked = true;
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+        } else {
+
+            isDrawerLocked = false;
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            drawerClosed();
+        }
     }
 }

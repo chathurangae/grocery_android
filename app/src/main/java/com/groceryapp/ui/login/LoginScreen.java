@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.groceryapp.R;
 import com.groceryapp.helpers.MarshMallowPermission;
 import com.groceryapp.ui.BaseActivity;
-import com.groceryapp.ui.ShellActivity;
+import com.groceryapp.ui.home.ShellActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
