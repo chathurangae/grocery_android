@@ -4,7 +4,7 @@
     android:id="@+id/activity_login_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@drawable/main_background"
+    android:background="@drawable/img_background"
     tools:context="com.groceryapp.ui.login.LoginScreen">
 
 
@@ -12,21 +12,8 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/linearlayout_bg"
         android:orientation="vertical"
         android:padding="10dp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_logo"
-
-            />
-
-
 
 
         <LinearLayout
@@ -37,7 +24,7 @@
             android:focusableInTouchMode="true" />
 
         <EditText
-            android:id="@+id/etUserName"
+            android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -45,14 +32,14 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/edtext_bg"
             android:ems="10"
-            android:hint="UserName"
-            android:inputType="text"
+            android:hint="@string/email_field_hint"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColorHint="@color/texthint" />
 
 
         <EditText
-            android:id="@+id/etPin"
+            android:id="@+id/pin_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -60,8 +47,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edtext_bg"
-            android:hint="Pin"
+            android:hint="@string/pin_field_hint"
             android:inputType="number"
+            android:maxLength="8"
             android:padding="10dp"
             android:textColorHint="@color/texthint" />
 
@@ -77,25 +65,29 @@
             android:padding="10dp"
             android:text="Login"
             android:textColor="@color/textColorPrimary"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtvSignup"
+            android:id="@+id/register_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="25dp"
             android:text="SignUP"
-            android:textColor="#555555"
+            android:textColor="@color/whiteColor"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 
         <TextView
-            android:id="@+id/txtvfpass"
+            android:id="@+id/forgot_pw_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="FORGOT PASSWORD?"
-            android:textColor="#555555"
+            android:textColor="@color/whiteColor"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 

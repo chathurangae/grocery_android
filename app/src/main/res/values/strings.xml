@@ -10,5 +10,8 @@
     <string name="action_play_next">Play Next</string>
     <string name="backdrop_title">Heading</string>
     <string name="backdrop_subtitle">Sub Title</string>
+    <string name="email_field_verify">Please Enter your firstName</string>
+    <string name="email_field_hint">Enter your Email</string>
+    <string name="pin_field_hint">Enter your PIN</string>
 
 </resources>

@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
         prepareAlbums();
 
         try {
-            Glide.with(this).load(R.drawable.main_background).into((ImageView) home.findViewById(R.id.backdrop));
+            Glide.with(this).load(R.drawable.img_background).into((ImageView) home.findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }
