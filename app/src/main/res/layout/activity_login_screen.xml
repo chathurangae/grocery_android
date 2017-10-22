@@ -48,7 +48,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/edtext_bg"
             android:hint="@string/pin_field_hint"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="8"
             android:padding="10dp"
             android:textColorHint="@color/texthint" />
@@ -74,9 +74,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:text="SignUP"
+            android:textAllCaps="true"
+            android:text="Sign UP"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
 
@@ -84,10 +85,11 @@
             android:id="@+id/forgot_pw_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:text="FORGOT PASSWORD?"
             android:textColor="@color/whiteColor"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
 

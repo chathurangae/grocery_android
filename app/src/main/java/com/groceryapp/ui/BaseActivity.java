@@ -1,5 +1,7 @@
 package com.groceryapp.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,11 @@ public class BaseActivity extends AppCompatActivity {
         }, error -> {
         });
         return returnSingle;
+    }
+
+    public void launchActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 
 

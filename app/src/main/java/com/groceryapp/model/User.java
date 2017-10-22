@@ -7,6 +7,7 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+
 @Table(database = GroceryDatabase.class)
 public class User extends BaseModel {
     @Column

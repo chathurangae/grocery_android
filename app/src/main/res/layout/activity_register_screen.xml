@@ -136,7 +136,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edtext_bg"
                 android:hint="PIN"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="8"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />
@@ -151,7 +151,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edtext_bg"
                 android:hint="confirm PIN"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="8"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />

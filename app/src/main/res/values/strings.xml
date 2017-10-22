@@ -13,5 +13,6 @@
     <string name="email_field_verify">Please Enter your firstName</string>
     <string name="email_field_hint">Enter your Email</string>
     <string name="pin_field_hint">Enter your PIN</string>
+    <string name="nic_field_hint">Please enter the last 3 digits.</string>
 
 </resources>

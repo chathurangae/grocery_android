@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.EditText;
 
 import com.groceryapp.R;
+import com.groceryapp.helpers.PreferenceManager;
 import com.groceryapp.helpers.ValidationHelper;
 import com.groceryapp.model.User;
 import com.groceryapp.persistence.LoginDA;
@@ -40,7 +41,6 @@ public class RegisterScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
-
         ButterKnife.bind(this);
     }
 
@@ -87,6 +87,7 @@ public class RegisterScreen extends BaseActivity {
             this.persistenceSingle(new LoginDA().saveUser(currentUser))
                     .subscribe(
                             success -> {
+                                new PreferenceManager(this).putUser(currentUser);
                                 goToLoginPage();
                             },
                             error -> {
