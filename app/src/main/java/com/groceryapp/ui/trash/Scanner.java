@@ -1,6 +1,6 @@
-package com.groceryapp.ui.shopping_cart;
+package com.groceryapp.ui.trash;
 
-import android.app.Activity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,31 +19,34 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.groceryapp.R;
-import com.groceryapp.ui.admin.AdminHome;
-import com.groceryapp.ui.home.ShellActivity;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
 
-public class QrFragment extends Fragment
-        implements ZXingScannerView.ResultHandler {
-
+public class Scanner extends Fragment implements ZXingScannerView.ResultHandler {
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
     private LinearLayout mainContainer;
-    private AdminHome admin;
-    private ShellActivity shell;
 
-    public QrFragment() {
+
+    public Scanner() {
         // Required empty public constructor
     }
 
-    public static QrFragment getInstance() {
-        QrFragment fragment = new QrFragment();
-        return fragment;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_scanner, container, false);
+        mainContainer = view.findViewById(R.id.container);
+        mScannerView = new ZXingScannerView(getActivity());
+        mainContainer.addView(mScannerView);
+        return view;
     }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -85,23 +88,6 @@ public class QrFragment extends Fragment
                 .show();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_qr, container, false);
-        mainContainer = view.findViewById(R.id.container);
-        mScannerView = new ZXingScannerView(getActivity());
-        mainContainer.addView(mScannerView);
-        Activity activity = getActivity();
-        if (activity instanceof AdminHome) {
-            admin = (AdminHome) activity;
-        }
-
-        if (activity instanceof ShellActivity) {
-            shell = (ShellActivity) activity;
-        }
-        return view;
-    }
 
     @Override
     public void handleResult(Result result) {
@@ -113,10 +99,7 @@ public class QrFragment extends Fragment
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (admin != null) {
-                    admin.loadFragment();
-                }
-                //mScannerView.resumeCameraPreview(QrFragment.this);
+                mScannerView.resumeCameraPreview(Scanner.this);
             }
         });
         builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
@@ -145,5 +128,3 @@ public class QrFragment extends Fragment
         mScannerView = null;
     }
 }
-
-

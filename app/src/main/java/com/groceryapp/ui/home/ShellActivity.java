@@ -30,6 +30,7 @@ import com.groceryapp.ui.BaseActivity;
 import com.groceryapp.ui.login.LoginScreen;
 import com.groceryapp.ui.shopping_cart.CartFragment;
 import com.groceryapp.ui.shopping_cart.QrFragment;
+import com.groceryapp.ui.trash.TrashIt;
 
 import java.util.ArrayList;
 
@@ -82,11 +83,11 @@ public class ShellActivity extends BaseActivity
             drawer.addDrawerListener(toggle);
             toggle.syncState();
         }
-        loadMainContainer(new HomeFragment() , "Home","TAG1");
+        loadMainContainer(new HomeFragment(), "Home", "TAG1");
 
     }
 
-    private void loadMainContainer(Fragment fragment,String title , String tag){
+    private void loadMainContainer(Fragment fragment, String title, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_container, fragment, tag);
@@ -96,7 +97,6 @@ public class ShellActivity extends BaseActivity
     }
 
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -104,8 +104,11 @@ public class ShellActivity extends BaseActivity
         if (id == R.id.nav_logOut) {
             signout();
         }
+        if (id == R.id.nav_trash) {
+            loadMainContainer(new QrFragment(), "Trash It", "TAG1");
+        }
         if (id == R.id.nav_cart) {
-            loadMainContainer(new CartFragment(),"Shopping Cart" , "TAG2");
+            loadMainContainer(new QrFragment(), "Shopping Cart", "TAG2");
         }
         drawerClosed();
         return true;

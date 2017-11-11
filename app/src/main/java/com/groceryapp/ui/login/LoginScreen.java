@@ -16,6 +16,7 @@ import com.groceryapp.helpers.ValidationHelper;
 import com.groceryapp.model.User;
 import com.groceryapp.persistence.LoginDA;
 import com.groceryapp.ui.BaseActivity;
+import com.groceryapp.ui.admin.AdminHome;
 import com.groceryapp.ui.home.ShellActivity;
 
 import butterknife.BindView;
@@ -44,6 +45,8 @@ public class LoginScreen extends BaseActivity {
             User currentUser = new PreferenceManager(this).getUser();
             emailField.setText(currentUser.getEmail());
         }
+        emailField.setText("admin@groceryapp.com");
+        pinField.setText("09876543");
     }
 
     @OnClick(R.id.btnLogin)
@@ -52,6 +55,7 @@ public class LoginScreen extends BaseActivity {
     }
 
     private void checkUser() {
+
         String email = emailField.getText().toString().trim();
         String pin = pinField.getText().toString().trim();
         if (!ValidationHelper.isValidEmail(email)) {
@@ -61,14 +65,18 @@ public class LoginScreen extends BaseActivity {
             pinField.requestFocus();
             pinField.setError("Please Enter PIN");
         } else {
-            int count = new LoginDA().checkUser(email, Integer.parseInt(pin));
-            if (count != 0) {
-                goToLandingPage();
+            if (email.equals("admin@groceryapp.com") && pin.equals("09876543")) {
+                goToAdminPage();
             } else {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setMessage("Envalid Email or PIN");
-                builder1.setCancelable(true);
-                builder1.show();
+                int count = new LoginDA().checkUser(email, Integer.parseInt(pin));
+                if (count != 0) {
+                    goToLandingPage();
+                } else {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                    builder1.setMessage("Envalid Email or PIN");
+                    builder1.setCancelable(true);
+                    builder1.show();
+                }
             }
         }
     }
@@ -88,6 +96,12 @@ public class LoginScreen extends BaseActivity {
 
     private void goToLandingPage() {
         Intent i = new Intent(this, ShellActivity.class);
+        startActivity(i);
+        LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
+    }
+
+    private void goToAdminPage() {
+        Intent i = new Intent(this, AdminHome.class);
         startActivity(i);
         LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
     }
