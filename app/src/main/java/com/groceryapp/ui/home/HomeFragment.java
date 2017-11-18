@@ -18,7 +18,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.groceryapp.R;
-import com.groceryapp.model.Album;
+import com.groceryapp.model.Home;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +35,8 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private AlbumsAdapter adapter;
-    private List<Album> albumList;
+    private HomeAdapter adapter;
+    private List<Home> homeList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,13 +46,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View home= inflater.inflate(R.layout.fragment_home, container, false);
+        View home = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, home);
 
         initCollapsingToolbar();
 
-        albumList = new ArrayList<>();
-        adapter = new AlbumsAdapter(getContext(), albumList);
+        homeList = new ArrayList<>();
+        adapter = new HomeAdapter(getContext(), homeList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
@@ -75,48 +75,23 @@ public class HomeFragment extends Fragment {
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
-                R.drawable.ic_imag_gray,
-                R.drawable.ic_imag_gray,
-                R.drawable.ic_imag_gray,
-                R.drawable.ic_imag_gray,
-                R.drawable.ic_imag_gray,
-                R.drawable.ic_image,
-                R.drawable.ic_image,
-                R.drawable.ic_image,
-                R.drawable.ic_image,
-                R.drawable.ic_image,
-                R.drawable.ic_image};
+                R.drawable.ic_shopping_cart,
+                R.drawable.ic_shopping_cart,
+                R.drawable.ic_shopping_cart,
+                R.drawable.ic_shopping_cart
+        };
 
-        Album a = new Album("True Romance", 13, covers[0]);
-        albumList.add(a);
+        Home a = new Home("Shopping Cart", covers[0]);
+        homeList.add(a);
 
-        a = new Album("Xscpae", 8, covers[1]);
-        albumList.add(a);
+        a = new Home("Shopping List", covers[1]);
+        homeList.add(a);
 
-        a = new Album("Maroon 5", 11, covers[2]);
-        albumList.add(a);
+        a = new Home("History", covers[2]);
+        homeList.add(a);
 
-        a = new Album("Born to Die", 12, covers[3]);
-        albumList.add(a);
-
-        a = new Album("Honeymoon", 14, covers[4]);
-        albumList.add(a);
-
-        a = new Album("I Need a Doctor", 1, covers[5]);
-        albumList.add(a);
-
-        a = new Album("Loud", 11, covers[6]);
-        albumList.add(a);
-
-        a = new Album("Legend", 14, covers[7]);
-        albumList.add(a);
-
-        a = new Album("Hello", 11, covers[8]);
-        albumList.add(a);
-
-        a = new Album("Greatest Hits", 17, covers[9]);
-        albumList.add(a);
-
+        a = new Home("Trash It", covers[3]);
+        homeList.add(a);
         adapter.notifyDataSetChanged();
     }
 

@@ -15,13 +15,27 @@ public class GroceryItem extends BaseModel {
     private Integer id;
 
     @Column
-    private int barCodeId;
+    private String barCodeId;
 
     @Column
     private String itemName;
 
     @Column
     private double price;
+
+    @Column
+    private int discountRate;
+
+    public GroceryItem() {
+
+    }
+
+    public GroceryItem(String barCodeId, String itemName, double price, int discountRate) {
+        this.barCodeId = barCodeId;
+        this.itemName = itemName;
+        this.price = price;
+        this.discountRate = discountRate;
+    }
 
 
     public Integer getId() {
@@ -32,11 +46,11 @@ public class GroceryItem extends BaseModel {
         this.id = id;
     }
 
-    public int getBarCodeId() {
+    public String getBarCodeId() {
         return barCodeId;
     }
 
-    public void setBarCodeId(int barCodeId) {
+    public void setBarCodeId(String barCodeId) {
         this.barCodeId = barCodeId;
     }
 
@@ -54,5 +68,13 @@ public class GroceryItem extends BaseModel {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(int discountRate) {
+        this.discountRate = discountRate;
     }
 }

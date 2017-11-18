@@ -8,11 +8,13 @@
     <string name="action_settings">Settings</string>
     <string name="action_add_favourite">Add to Favourites</string>
     <string name="action_play_next">Play Next</string>
-    <string name="backdrop_title">Heading</string>
+    <string name="backdrop_title">Grocery App</string>
     <string name="backdrop_subtitle">Sub Title</string>
     <string name="email_field_verify">Please Enter your firstName</string>
     <string name="email_field_hint">Enter your Email</string>
     <string name="pin_field_hint">Enter your PIN</string>
     <string name="nic_field_hint">Please enter the last 3 digits.</string>
+    <string name="add_items">Add Items</string>
+
 
 </resources>

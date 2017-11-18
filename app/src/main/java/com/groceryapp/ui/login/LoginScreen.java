@@ -45,8 +45,6 @@ public class LoginScreen extends BaseActivity {
             User currentUser = new PreferenceManager(this).getUser();
             emailField.setText(currentUser.getEmail());
         }
-        emailField.setText("admin@groceryapp.com");
-        pinField.setText("09876543");
     }
 
     @OnClick(R.id.btnLogin)
@@ -55,7 +53,6 @@ public class LoginScreen extends BaseActivity {
     }
 
     private void checkUser() {
-
         String email = emailField.getText().toString().trim();
         String pin = pinField.getText().toString().trim();
         if (!ValidationHelper.isValidEmail(email)) {

@@ -4,15 +4,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
-import com.groceryapp.ui.shopping_cart.CartFragment;
-import com.groceryapp.ui.shopping_cart.QrFragment;
+import com.groceryapp.ui.scanner.QrFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +22,8 @@ public class AdminHome extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.navigation)
     BottomNavigationView bottomNavigationView;
+    @BindView(R.id.mainLayout)
+    RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,10 @@ public class AdminHome extends BaseActivity {
                                 selectedFragment = new QrFragment();
                                 break;
                             case R.id.action_item2:
-                                selectedFragment = EditItem.newInstance();
+                                selectedFragment = ItemList.newInstance(1);
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = EditItem.newInstance();
+                                selectedFragment = ItemList.newInstance(2);
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -56,17 +57,25 @@ public class AdminHome extends BaseActivity {
                         return true;
                     }
                 });
+        loadQRFragment();
 
-        //Manually displaying the first fragment - one time only
+    }
+
+    public void loadQRFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, new QrFragment());
         transaction.commit();
     }
 
-    public void loadFragment() {
+
+    public void loadFragment(String code,int itemType) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, AddItem.newInstance());
+        transaction.replace(R.id.frame_layout, AddItem.newInstance(code, itemType));
         transaction.commit();
+    }
+
+    public void showSnackBar(String message, int backgroundColour) {
+        this.showSnackBar(layout, message, backgroundColour);
     }
 
 

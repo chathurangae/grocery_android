@@ -1,4 +1,4 @@
-package com.groceryapp.ui.shopping_cart;
+package com.groceryapp.ui.scanner;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.groceryapp.R;
+import com.groceryapp.ui.admin.AddItem;
 import com.groceryapp.ui.admin.AdminHome;
 import com.groceryapp.ui.home.ShellActivity;
+import com.groceryapp.ui.shopping_cart.ItemDetail;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -106,25 +108,21 @@ public class QrFragment extends Fragment
     @Override
     public void handleResult(Result result) {
         final String result1 = result.getText();
-        Log.e("QRCodeScanner", result.getText());
-        Log.e("QRCodeScanner", result.getBarcodeFormat().toString());
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Scan Result");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (admin != null) {
-                    admin.loadFragment();
-                }
-                //mScannerView.resumeCameraPreview(QrFragment.this);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            if (admin != null) {
+                admin.loadFragment(result1, 0);
             }
+            if (shell != null) {
+                shell.loadFragment(result1);
+            }
+
         });
-        builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result1));
-                startActivity(browserIntent);
-            }
+        builder.setNeutralButton("CANCEL", (dialog, which) -> {
+            mScannerView.resumeCameraPreview(QrFragment.this);
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result1));
+//                startActivity(browserIntent);
         });
         builder.setMessage(result.getText());
         AlertDialog alert1 = builder.create();

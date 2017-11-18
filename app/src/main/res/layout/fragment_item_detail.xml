@@ -1,10 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_background"
-    tools:context="com.groceryapp.ui.admin.AddItem">
+    tools:context="com.groceryapp.ui.shopping_cart.ItemDetail">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,18 +38,6 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/bar_code_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edtext_bg"
-                android:inputType="none"
-                android:padding="10dp"
-                android:textColorHint="@color/texthint" />
-
-            <EditText
                 android:id="@+id/item_name_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,8 +46,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edtext_bg"
                 android:ems="10"
-                android:hint="Item Name"
-                android:inputType="text"
+                android:inputType="none"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />
 
@@ -73,13 +59,12 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edtext_bg"
                 android:ems="10"
-                android:hint="Price"
-                android:inputType="numberDecimal"
+                android:inputType="none"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />
 
             <EditText
-                android:id="@+id/discount_field"
+                android:id="@+id/quant_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -87,9 +72,22 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edtext_bg"
                 android:ems="10"
-                android:hint="Discount"
+                android:hint="QUantity"
                 android:inputType="number"
-                android:maxLength="2"
+                android:maxLength="10"
+                android:padding="10dp"
+                android:textColorHint="@color/texthint" />
+
+            <EditText
+                android:id="@+id/total_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edtext_bg"
+                android:hint="Total"
+                android:inputType="none"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />
 
@@ -113,5 +111,6 @@
         </LinearLayout>
 
     </ScrollView>
-</RelativeLayout>
 
+
+</RelativeLayout>

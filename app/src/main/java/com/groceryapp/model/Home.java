@@ -1,18 +1,15 @@
 package com.groceryapp.model;
 
 
-
-public class Album {
+public class Home {
     private String name;
-    private int numOfSongs;
     private int thumbnail;
 
-    public Album() {
+    public Home() {
     }
 
-    public Album(String name, int numOfSongs, int thumbnail) {
+    public Home(String name, int thumbnail) {
         this.name = name;
-        this.numOfSongs = numOfSongs;
         this.thumbnail = thumbnail;
     }
 
@@ -22,14 +19,6 @@ public class Album {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getNumOfSongs() {
-        return numOfSongs;
-    }
-
-    public void setNumOfSongs(int numOfSongs) {
-        this.numOfSongs = numOfSongs;
     }
 
     public int getThumbnail() {
