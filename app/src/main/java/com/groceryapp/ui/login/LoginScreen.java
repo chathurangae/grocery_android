@@ -57,10 +57,10 @@ public class LoginScreen extends BaseActivity {
         String pin = pinField.getText().toString().trim();
         if (!ValidationHelper.isValidEmail(email)) {
             emailField.requestFocus();
-            emailField.setError("Please Enter valid email");
+            emailField.setError("Please enter valid email");
         } else if (TextUtils.isEmpty(pin)) {
             pinField.requestFocus();
-            pinField.setError("Please Enter PIN");
+            pinField.setError("Please enter PIN");
         } else {
             if (email.equals("admin@groceryapp.com") && pin.equals("09876543")) {
                 goToAdminPage();
@@ -70,7 +70,7 @@ public class LoginScreen extends BaseActivity {
                     goToLandingPage();
                 } else {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                    builder1.setMessage("Envalid Email or PIN");
+                    builder1.setMessage("Invalid Email or PIN");
                     builder1.setCancelable(true);
                     builder1.show();
                 }

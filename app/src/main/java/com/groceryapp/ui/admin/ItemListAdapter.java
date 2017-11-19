@@ -51,7 +51,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         holder.itemId.setText(item.getBarCodeId());
         if(currentType==1)
         {
-            holder.delete.setBackgroundResource(R.drawable.ic_accepted);
+            holder.delete.setBackgroundResource(R.drawable.ic_edit);
 
         }else {
             holder.delete.setBackgroundResource(R.drawable.ic_delete);

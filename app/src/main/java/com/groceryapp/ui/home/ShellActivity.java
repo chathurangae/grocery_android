@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 
 import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
-import com.groceryapp.ui.admin.AddItem;
 import com.groceryapp.ui.login.LoginScreen;
 import com.groceryapp.ui.scanner.QrFragment;
 import com.groceryapp.ui.shopping_cart.ItemDetail;
@@ -147,7 +145,7 @@ public class ShellActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.cart_meu, menu);
+        getMenuInflater().inflate(R.menu.cart_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

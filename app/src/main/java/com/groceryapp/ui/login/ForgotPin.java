@@ -49,7 +49,7 @@ public class ForgotPin extends BaseActivity {
             String firstDigits = userNic.substring(0,3);
             String lastDigits = lastRemoved.substring(Math.max(lastRemoved.length()-3,0));
 
-            nicDetailText.setText("NIC :"+firstDigits+"xxxxx"+lastCharacter+"please enter last 3 digit");
+            nicDetailText.setText("NIC: "+firstDigits+"*****"+lastCharacter+" please enter last 3 digit");
         }
 
     }

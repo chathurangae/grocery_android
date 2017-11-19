@@ -66,10 +66,10 @@ public class AddItem extends Fragment {
         dicount = discountField.getText().toString().trim();
         if (TextUtils.isEmpty(itemName)) {
             itemNameField.requestFocus();
-            itemNameField.setError("Requred");
+            itemNameField.setError("Required Field");
         } else if (TextUtils.isEmpty(price)) {
             priceField.requestFocus();
-            priceField.setError("Requred");
+            priceField.setError("Required Field");
         } else {
             ItemOperation();
 
