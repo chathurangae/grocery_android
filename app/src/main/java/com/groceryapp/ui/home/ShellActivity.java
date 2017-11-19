@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import com.groceryapp.ui.admin.AddItem;
 import com.groceryapp.ui.login.LoginScreen;
 import com.groceryapp.ui.scanner.QrFragment;
 import com.groceryapp.ui.shopping_cart.ItemDetail;
+import com.groceryapp.ui.shopping_cart.UserItemList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +42,8 @@ public class ShellActivity extends BaseActivity
     Toolbar toolbar;
     @BindView(R.id.heading_text)
     TextView toolbarText;
+    @BindView(R.id.user_profile_image)
+    CircleImageView userImage;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
@@ -46,6 +51,8 @@ public class ShellActivity extends BaseActivity
     ActionBarDrawerToggle toggle;
     @BindView(R.id.drawer_main_content)
     RelativeLayout frameLayout;
+    @BindView(R.id.mainFrame)
+    FrameLayout mainFrame;
     View headerView;
     CircleImageView headerAvatar;
     TextView headerUsername;
@@ -66,6 +73,7 @@ public class ShellActivity extends BaseActivity
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        userImage.setVisibility(View.GONE);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         navigationView.setNavigationItemSelectedListener(this);
@@ -136,6 +144,29 @@ public class ShellActivity extends BaseActivity
         startActivity(i);
         finish();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cart_meu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_cart:
+                loadMainContainer(new UserItemList());
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void showSnackBar(String message, int backgroundColour) {
+        this.showSnackBar(mainFrame, message, backgroundColour);
+    }
+
 
     @Override
     protected void onResume() {
