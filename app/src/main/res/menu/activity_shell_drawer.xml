@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_feed"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/ic_feed"
+            android:title="Shopping Cart" />
+        <item
+            android:id="@+id/nav_list"
+            android:icon="@drawable/ic_alerts"
+            android:title="Shopping List" />
+        <item
+            android:id="@+id/nav_trash"
+            android:icon="@drawable/ic_alerts"
+            android:title="Trash It" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_circles"
+            android:title="History" />
+
+
+    </group>
+    <group>
+        <item
+            android:id="@+id/nav_logOut"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+    </group>
+
+</menu>

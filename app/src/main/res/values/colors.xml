@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#EC6144</color>
+    <color name="colorPrimaryDark">#EC6144</color>
     <color name="colorAccent">#FF4081</color>
     <color name="texthint">#B7B7B7</color>
     <color name="mainButton">#0284FE</color>
     <color name="textColorPrimary">#FFFFFF</color>
+    <color name="font_bold">#646261</color>
+    <color name="blackColor">#000000</color>
+    <color name="whiteColor">#fff</color>
+    <color name="drawer_nav_background">#ef4836</color>
+
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+
+    <color name="feed_tab_background">#f7f7f7</color>
+    <color name="feed_tab_selected_background">#ef4836</color>
+    <color name="feed_tab_selected_text">#ffffff</color>
+    <color name="feed_tab_unselected_text">#494849</color>
+    <color name="feed_pending_dot">#ef4836</color>
+    <color name="feed_complete_dot">#79c735</color>
 </resources>
