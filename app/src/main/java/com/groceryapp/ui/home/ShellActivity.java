@@ -26,8 +26,11 @@ import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
 import com.groceryapp.ui.login.LoginScreen;
 import com.groceryapp.ui.scanner.QrFragment;
+import com.groceryapp.ui.shopping_cart.Checkout;
 import com.groceryapp.ui.shopping_cart.ItemDetail;
 import com.groceryapp.ui.shopping_cart.UserItemList;
+import com.groceryapp.ui.trash.ItemDetails;
+import com.groceryapp.ui.trash.TrashItList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,6 +116,18 @@ public class ShellActivity extends BaseActivity
         transaction.commit();
     }
 
+    public void loadTrash(String code) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, ItemDetails.newInstance(code));
+        transaction.commit();
+    }
+
+    public void loadCheckout(String total) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, Checkout.newInstance(total));
+        transaction.commit();
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -122,10 +137,16 @@ public class ShellActivity extends BaseActivity
             signout();
         }
         if (id == R.id.nav_trash) {
-            loadMainContainer(new QrFragment());
+            loadMainContainer(QrFragment.getInstance(2));
         }
         if (id == R.id.nav_cart) {
-            loadMainContainer(new QrFragment());
+            loadMainContainer(QrFragment.getInstance(1));
+        }
+        if (id == R.id.nav_list) {
+            loadMainContainer(new TrashItList());
+        }
+        if (id == R.id.nav_home) {
+            loadMainContainer(new HomeFragment());
         }
         drawerClosed();
         return true;

@@ -2,15 +2,12 @@ package com.groceryapp.ui.scanner;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +16,8 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.groceryapp.R;
-import com.groceryapp.ui.admin.AddItem;
 import com.groceryapp.ui.admin.AdminHome;
 import com.groceryapp.ui.home.ShellActivity;
-import com.groceryapp.ui.shopping_cart.ItemDetail;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
@@ -38,13 +32,18 @@ public class QrFragment extends Fragment
     private LinearLayout mainContainer;
     private AdminHome admin;
     private ShellActivity shell;
+    public static final String ARG_TYPE = "type";
+    private int itemtype;
 
     public QrFragment() {
         // Required empty public constructor
     }
 
-    public static QrFragment getInstance() {
+    public static QrFragment getInstance(int type) {
         QrFragment fragment = new QrFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_TYPE, type);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -60,13 +59,10 @@ public class QrFragment extends Fragment
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(CAMERA)) {
                                 showMessageOKCancel("You need to allow access to both the permissions",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                    requestPermissions(new String[]{CAMERA},
-                                                            REQUEST_CAMERA);
-                                                }
+                                        (dialog, which) -> {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                requestPermissions(new String[]{CAMERA},
+                                                        REQUEST_CAMERA);
                                             }
                                         });
                                 return;
@@ -94,6 +90,7 @@ public class QrFragment extends Fragment
         mainContainer = view.findViewById(R.id.container);
         mScannerView = new ZXingScannerView(getActivity());
         mainContainer.addView(mScannerView);
+        itemtype = getArguments().getInt(ARG_TYPE);
         Activity activity = getActivity();
         if (activity instanceof AdminHome) {
             admin = (AdminHome) activity;
@@ -117,14 +114,17 @@ public class QrFragment extends Fragment
                 admin.loadFragment(result1, 0);
             }
             if (shell != null) {
-                shell.loadFragment(result1);
+                if (itemtype == 1) {
+                    shell.loadFragment(result1);
+                } else {
+                    shell.loadTrash(result1);
+                }
             }
 
         });
         builder.setNeutralButton("CANCEL", (dialog, which) -> {
             mScannerView.resumeCameraPreview(QrFragment.this);
-//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result1));
-//                startActivity(browserIntent);
+
         });
         builder.setMessage(result.getText());
         AlertDialog alert1 = builder.create();

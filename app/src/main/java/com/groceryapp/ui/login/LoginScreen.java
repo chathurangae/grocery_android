@@ -95,6 +95,7 @@ public class LoginScreen extends BaseActivity {
         Intent i = new Intent(this, ShellActivity.class);
         startActivity(i);
         LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
+        this.finish();
     }
 
     private void goToAdminPage() {

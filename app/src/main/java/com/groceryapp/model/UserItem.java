@@ -31,11 +31,12 @@ public class UserItem extends BaseModel {
 
     }
 
-    public UserItem(String barCodeId, String itemName, double price, int quantity) {
+    public UserItem(String barCodeId, String itemName, double price, int quantity, String date) {
         this.barCodeId = barCodeId;
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
+        this.date=date;
     }
 
     public Integer getId() {

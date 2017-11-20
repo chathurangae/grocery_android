@@ -1,23 +1,26 @@
-package com.groceryapp.ui.shopping_cart;
+package com.groceryapp.ui.trash;
 
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.groceryapp.R;
-import com.groceryapp.model.GroceryItem;
-import com.groceryapp.model.UserItem;
-import com.groceryapp.persistence.ItemDA;
-import com.groceryapp.persistence.UserItemDA;
-import com.groceryapp.ui.admin.ItemListAdapter;
+import com.groceryapp.model.ShoppingList;
+import com.groceryapp.persistence.ShoppingListDA;
 import com.groceryapp.ui.home.ShellActivity;
 
 import java.util.ArrayList;
@@ -28,9 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        UserItemAdapter.OnItemDelete {
-
+public class TrashItList extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+        TrashItemAdapter.OnItemDelete {
     private ShellActivity shellActivity;
     @BindView(R.id.item_recycler_view)
     RecyclerView recyclerItemList;
@@ -38,13 +40,16 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
     TextView itemCount;
     @BindView(R.id.item_container)
     SwipeRefreshLayout itemContainer;
-    @BindView(R.id.total_price)
-    TextView totalPrice;
-    private UserItemAdapter listAdapter;
-    private List<UserItem> currentItemList;
+    private TrashItemAdapter listAdapter;
+    private List<ShoppingList> currentItemList;
+    @BindView(R.id.item_name_field)
+    EditText itemName;
+    @BindView(R.id.item_quant_field)
+    EditText quantity;
+    private List<ShoppingList> currentShoppingItem;
 
 
-    public UserItemList() {
+    public TrashItList() {
         // Required empty public constructor
     }
 
@@ -53,7 +58,7 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_user_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_trash_it, container, false);
         ButterKnife.bind(this, view);
         Activity activity = getActivity();
         if (activity instanceof ShellActivity) {
@@ -64,11 +69,12 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerItemList.setLayoutManager(linearLayoutManager);
         getItemList();
+
         return view;
     }
 
     private void getItemList() {
-        shellActivity.persistenceSingle(new UserItemDA().getAllItems())
+        shellActivity.persistenceSingle(new ShoppingListDA().getAllItems())
                 .subscribe(
                         items -> {
                             currentItemList = new ArrayList<>();
@@ -83,7 +89,7 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
 
     }
 
-    private void onSuccess(List<UserItem> itemList) {
+    private void onSuccess(List<ShoppingList> itemList) {
         if (itemList.size() > 0) {
             prepareItem();
         }
@@ -91,7 +97,7 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void prepareItem() {
-        listAdapter = new UserItemAdapter(getContext(), currentItemList, this);
+        listAdapter = new TrashItemAdapter(getContext(), currentItemList, this);
         recyclerItemList.setAdapter(listAdapter);
         resetValues();
         itemContainer.setRefreshing(false);
@@ -100,12 +106,34 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void resetValues() {
         itemCount.setText(currentItemList.size() + " items");
-        Double sum = 0.0;
-        for (int i = 0; i < currentItemList.size(); i++) {
-            sum = sum + currentItemList.get(i).getPrice();
-        }
-        totalPrice.setText(String.valueOf(sum) + " Rs");
     }
+
+    @OnClick(R.id.done_button)
+    void addNewItem() {
+        String name = itemName.getText().toString().trim();
+        String currentquant = quantity.getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            itemName.requestFocus();
+            itemName.setError("Please enter Name");
+        } else if (TextUtils.isEmpty(currentquant)) {
+            quantity.requestFocus();
+            quantity.setError("Please enter Quantity");
+        } else {
+            currentShoppingItem = new ArrayList<>();
+            ShoppingList list = new ShoppingList("0000000", name, Integer.parseInt(currentquant));
+            currentShoppingItem.add(list);
+            shellActivity.persistenceSingle(new ShoppingListDA().saveItems(currentShoppingItem))
+                    .subscribe(
+                            success -> {
+                                onRefresh();
+                            },
+                            error -> {
+                                shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
+                            }
+                    );
+        }
+    }
+
 
     @Override
     public void onRefresh() {
@@ -115,7 +143,7 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onItemDelete(String barCode) {
-        shellActivity.persistenceSingle(new UserItemDA().deleteItem(barCode))
+        shellActivity.persistenceSingle(new ShoppingListDA().deleteItem(barCode))
                 .subscribe(
                         success -> {
                             getItemList();
@@ -124,11 +152,5 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
                             shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
                         }
                 );
-
-    }
-
-    @OnClick(R.id.check_out_button)
-    void checkout() {
-        shellActivity.loadCheckout(totalPrice.getText().toString());
     }
 }

@@ -40,29 +40,25 @@ public class AdminHome extends BaseActivity {
     }
 
 
-
     private void initViews() {
         bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.action_item1:
-                                selectedFragment = new QrFragment();
-                                break;
-                            case R.id.action_item2:
-                                selectedFragment = ItemList.newInstance(1);
-                                break;
-                            case R.id.action_item3:
-                                selectedFragment = ItemList.newInstance(2);
-                                break;
-                        }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
-                        return true;
+                (item -> {
+                    Fragment selectedFragment = null;
+                    switch (item.getItemId()) {
+                        case R.id.action_item1:
+                            selectedFragment = QrFragment.getInstance(0);
+                            break;
+                        case R.id.action_item2:
+                            selectedFragment = ItemList.newInstance(1);
+                            break;
+                        case R.id.action_item3:
+                            selectedFragment = ItemList.newInstance(2);
+                            break;
                     }
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, selectedFragment);
+                    transaction.commit();
+                    return true;
                 });
         loadQRFragment();
 
@@ -70,7 +66,7 @@ public class AdminHome extends BaseActivity {
 
     public void loadQRFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, new QrFragment());
+        transaction.replace(R.id.frame_layout, QrFragment.getInstance(0));
         transaction.commit();
     }
 

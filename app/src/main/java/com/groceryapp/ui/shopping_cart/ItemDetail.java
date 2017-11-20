@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.groceryapp.R;
+import com.groceryapp.helpers.DateFormatter;
 import com.groceryapp.model.GroceryItem;
 import com.groceryapp.model.UserItem;
 import com.groceryapp.persistence.ItemDA;
@@ -114,12 +115,12 @@ public class ItemDetail extends Fragment {
     void buttonAdd() {
         currrentList = new ArrayList<>();
         UserItem item = new UserItem(barCode, itemName.getText().toString(), Double.parseDouble(total.getText().toString())
-                , currentQuant);
+                , currentQuant, DateFormatter.getCurrentDate());
         currrentList.add(item);
         shell.persistenceSingle(new UserItemDA().saveItems(currrentList))
                 .subscribe(
                         success -> {
-                            shell.loadMainContainer(QrFragment.getInstance());
+                            shell.loadMainContainer(QrFragment.getInstance(1));
                         },
                         error -> {
                             shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
@@ -129,7 +130,7 @@ public class ItemDetail extends Fragment {
 
     @OnClick(R.id.cancel_button)
     void cancelButton() {
-        shell.loadMainContainer(QrFragment.getInstance());
+        shell.loadMainContainer(QrFragment.getInstance(1));
     }
 
     void checkPrice(int quant) {
