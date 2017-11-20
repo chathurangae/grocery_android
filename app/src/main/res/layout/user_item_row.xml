@@ -78,14 +78,26 @@
                         android:id="@+id/post_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/item_quant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="4dp"
+                            android:text="scscscsc"
+                            android:textColor="@color/colorPrimaryDark" />
 
                         <TextView
                             android:id="@+id/item_price"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="1"
                             android:paddingTop="4dp"
-                            android:text="aaaaaaaaaaaaaaaaaaaa"
+                            android:text="scscscscscsc"
                             android:textColor="@color/album_title" />
                     </LinearLayout>
 

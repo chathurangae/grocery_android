@@ -61,22 +61,22 @@ public class RegisterScreen extends BaseActivity {
             firstNameField.setError(getString(R.string.email_field_verify));
         } else if (TextUtils.isEmpty(lasName)) {
             lastNameField.requestFocus();
-            lastNameField.setError("Please Enter your lastName");
+            lastNameField.setError("Please enter your last name");
         } else if (!ValidationHelper.isValidEmail(email)) {
             emailField.requestFocus();
-            emailField.setError("Please Enter valid email");
+            emailField.setError("Please enter valid email");
         } else if (contact.length() < 10) {
             contactNoField.requestFocus();
-            contactNoField.setError("Please Enter valid Number");
+            contactNoField.setError("Please enter valid contact number");
         } else if (nic.length() < 10) {
             nicField.requestFocus();
-            nicField.setError("Please Enter valid NIC");
+            nicField.setError("Please enter valid NIC");
         } else if (TextUtils.isEmpty(city)) {
             cityField.requestFocus();
-            cityField.setError("Please Enter your City");
+            cityField.setError("Please Enter your city");
         } else if (pin.length() < 4) {
             pinField.requestFocus();
-            pinField.setError("Pin must be 4-6characters long");
+            pinField.setError("Pin must be 4-6 characters long");
         } else if (!pin.equals(verifiedPin)) {
             pinVerifiedField.requestFocus();
             pinVerifiedField.setError("Pin mismatched");

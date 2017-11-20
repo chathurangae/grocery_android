@@ -97,10 +97,12 @@ public class QrFragment extends Fragment
         Activity activity = getActivity();
         if (activity instanceof AdminHome) {
             admin = (AdminHome) activity;
+
         }
 
         if (activity instanceof ShellActivity) {
             shell = (ShellActivity) activity;
+            shell.setToolbarTitle("Scanner");
         }
         return view;
     }

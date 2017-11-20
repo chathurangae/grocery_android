@@ -5,9 +5,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
@@ -31,8 +33,13 @@ public class AdminHome extends BaseActivity {
         setContentView(R.layout.activity_admin_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         initViews();
     }
+
+
 
     private void initViews() {
         bottomNavigationView.setOnNavigationItemSelectedListener
@@ -68,7 +75,7 @@ public class AdminHome extends BaseActivity {
     }
 
 
-    public void loadFragment(String code,int itemType) {
+    public void loadFragment(String code, int itemType) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, AddItem.newInstance(code, itemType));
         transaction.commit();

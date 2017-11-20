@@ -12,6 +12,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -58,7 +61,6 @@ public class HomeFragment extends Fragment {
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-
         prepareAlbums();
 
         try {
@@ -76,9 +78,9 @@ public class HomeFragment extends Fragment {
     private void prepareAlbums() {
         int[] covers = new int[]{
                 R.drawable.ic_shopping_cart,
-                R.drawable.ic_shopping_cart,
-                R.drawable.ic_shopping_cart,
-                R.drawable.ic_shopping_cart
+                R.drawable.ic_shopping_list,
+                R.drawable.ic_trash_it,
+                R.drawable.ic_history
         };
 
         Home a = new Home("Shopping Cart", covers[0]);
@@ -163,6 +165,7 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
 
     /**
      * Converting dp to pixel
