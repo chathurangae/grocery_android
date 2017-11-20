@@ -64,6 +64,7 @@ public class TrashItList extends Fragment implements SwipeRefreshLayout.OnRefres
         if (activity instanceof ShellActivity) {
             shellActivity = (ShellActivity) activity;
         }
+        shellActivity.setToolbarTitle("Trash It List");
         this.itemContainer.setOnRefreshListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

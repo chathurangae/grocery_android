@@ -12,8 +12,12 @@ import android.widget.TextView;
 
 import com.groceryapp.R;
 import com.groceryapp.helpers.DateFormatter;
+import com.groceryapp.model.ShoppingCart;
+import com.groceryapp.persistence.CartDA;
 import com.groceryapp.ui.home.ShellActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -62,7 +66,7 @@ public class Checkout extends Fragment {
 
         totalField.setText(total);
         date.setText(DateFormatter.getCurrentDate());
-        String random = getRandomString(8);
+        String random = getRandomString(5);
         invoice.setText(random);
 
         return view;
@@ -82,6 +86,20 @@ public class Checkout extends Fragment {
 
     @OnClick(R.id.confirm_button)
     void confirm() {
+        List<ShoppingCart> cartList = new ArrayList<>();
+        ShoppingCart cart = new ShoppingCart(invoice.getText().toString(),
+                date.getText().toString(), Double.parseDouble(total));
+        cartList.add(cart);
+
+        shell.persistenceSingle(new CartDA().saveItems(cartList))
+                .subscribe(
+                        success -> {
+                            shell.showSnackBar("Success", R.color.feed_complete_dot);
+                        },
+                        error -> {
+                            shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
+                        }
+                );
 
     }
 

@@ -1,6 +1,7 @@
 package com.groceryapp.ui.home;
 
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -22,6 +23,10 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.groceryapp.R;
 import com.groceryapp.model.Home;
+import com.groceryapp.ui.histroy.HistroyList;
+import com.groceryapp.ui.scanner.QrFragment;
+import com.groceryapp.ui.shopping_cart.UserItemList;
+import com.groceryapp.ui.trash.TrashItList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeAdapter.OnItemSelect {
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -37,6 +42,7 @@ public class HomeFragment extends Fragment {
     AppBarLayout appBarLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    private ShellActivity shellActivity;
 
     private HomeAdapter adapter;
     private List<Home> homeList;
@@ -52,10 +58,15 @@ public class HomeFragment extends Fragment {
         View home = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, home);
 
-        initCollapsingToolbar();
+        Activity activity = getActivity();
+        if (activity instanceof ShellActivity) {
+            shellActivity = (ShellActivity) activity;
+        }
 
+        initCollapsingToolbar();
+        shellActivity.setToolbarTitle("Home");
         homeList = new ArrayList<>();
-        adapter = new HomeAdapter(getContext(), homeList);
+        adapter = new HomeAdapter(getContext(), homeList, this);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
@@ -126,6 +137,21 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onItemSelect(String name) {
+        if (name.equals("Shopping Cart")) {
+            shellActivity.loadMainContainer(new UserItemList());
+        } else if (name.equals("Shopping List")) {
+            shellActivity.loadMainContainer(new TrashItList());
+
+        } else if (name.equals("History")) {
+            shellActivity.loadMainContainer(new HistroyList());
+        } else {
+            shellActivity.loadMainContainer(QrFragment.getInstance(2));
+        }
+
     }
 
     /**

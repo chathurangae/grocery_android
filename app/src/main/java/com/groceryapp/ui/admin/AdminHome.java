@@ -1,5 +1,6 @@
 package com.groceryapp.ui.admin;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 
 import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
+import com.groceryapp.ui.login.LoginScreen;
 import com.groceryapp.ui.scanner.QrFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AdminHome extends BaseActivity {
 
@@ -62,6 +65,13 @@ public class AdminHome extends BaseActivity {
                 });
         loadQRFragment();
 
+    }
+
+    @OnClick(R.id.log_out)
+    void logout() {
+        Intent i = new Intent(this, LoginScreen.class);
+        startActivity(i);
+        finish();
     }
 
     public void loadQRFragment() {

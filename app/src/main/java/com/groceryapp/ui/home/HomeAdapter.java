@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,22 +21,26 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     private Context mContext;
     private List<Home> albumList;
+    private OnItemSelect itemselect;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public ImageView thumbnail;
+        public RelativeLayout layout;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            layout = view.findViewById(R.id.main_layout);
         }
     }
 
 
-    public HomeAdapter(Context mContext, List<Home> albumList) {
+    public HomeAdapter(Context mContext, List<Home> albumList, OnItemSelect itemselect) {
         this.mContext = mContext;
         this.albumList = albumList;
+        this.itemselect = itemselect;
     }
 
     @Override
@@ -51,27 +56,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         Home album = albumList.get(position);
         holder.title.setText(album.getName());
         Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
+        holder.thumbnail.setOnClickListener(view -> itemselect.onItemSelect(album.getName()));
     }
 
-    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        public MyMenuItemClickListener() {
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-//            switch (menuItem.getItemId()) {
-//                case R.id.action_add_favourite:
-//                    Toast.makeText(mContext, "Add to favourite", Toast.LENGTH_SHORT).show();
-//                    return true;
-//                case R.id.action_play_next:
-//                    Toast.makeText(mContext, "Play next", Toast.LENGTH_SHORT).show();
-//                    return true;
-//                default:
-//            }
-            return false;
-        }
+    public interface OnItemSelect {
+        void onItemSelect(String name);
     }
+
 
     @Override
     public int getItemCount() {

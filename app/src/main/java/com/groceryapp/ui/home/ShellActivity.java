@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.groceryapp.R;
 import com.groceryapp.ui.BaseActivity;
+import com.groceryapp.ui.histroy.HistroyList;
 import com.groceryapp.ui.login.LoginScreen;
 import com.groceryapp.ui.scanner.QrFragment;
 import com.groceryapp.ui.shopping_cart.Checkout;
@@ -147,6 +148,9 @@ public class ShellActivity extends BaseActivity
         }
         if (id == R.id.nav_home) {
             loadMainContainer(new HomeFragment());
+        }
+        if (id == R.id.nav_history) {
+            loadMainContainer(new HistroyList());
         }
         drawerClosed();
         return true;
