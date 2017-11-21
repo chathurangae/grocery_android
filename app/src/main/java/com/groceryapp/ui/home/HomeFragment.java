@@ -90,8 +90,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemSelect {
         int[] covers = new int[]{
                 R.drawable.ic_shopping_cart,
                 R.drawable.ic_shopping_list,
-                R.drawable.ic_trash_it,
-                R.drawable.ic_history
+                R.drawable.ic_history,
+                R.drawable.ic_trash_it
         };
 
         Home a = new Home("Shopping Cart", covers[0]);

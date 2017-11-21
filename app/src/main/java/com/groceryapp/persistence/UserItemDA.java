@@ -23,7 +23,7 @@ public class UserItemDA {
                 .error((transaction, error) -> singleSubscriber
                         .onError(new Exception(error.toString())))
                 .success(transaction -> singleSubscriber
-                        .onSuccess("success")).build().execute());
+                        .onSuccess("Successful")).build().execute());
     }
 
     public Single<List<UserItem>> getAllItems() {
@@ -50,7 +50,7 @@ public class UserItemDA {
                                 model.update()).addAll(currentItem).build()).error((transaction,
                                                                                     error) ->
                         singleSubscriber.onError(new Exception("Error"))).success(transaction ->
-                        singleSubscriber.onSuccess("success")).build().execute());
+                        singleSubscriber.onSuccess("Successful")).build().execute());
     }
 
     public Single<String> deleteItem(String code) {
@@ -59,7 +59,7 @@ public class UserItemDA {
                 SQLite.delete().from(UserItem.class)
                         .where(UserItem_Table.barCodeId.in(code)
                         ).async().execute();
-                singleSubscriber.onSuccess("Success");
+                singleSubscriber.onSuccess("Successful");
 
 
             } catch (Exception e) {

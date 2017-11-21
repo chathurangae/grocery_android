@@ -16,13 +16,11 @@ public class LoginDA {
         return Single.create(singleSubscriber -> {
             try {
                 FlowManager.getModelAdapter(User.class).save(currentUser);
-                singleSubscriber.onSuccess("sucess");
+                singleSubscriber.onSuccess("Successful");
             } catch (Exception error) {
                 singleSubscriber.onError(error);
             }
-
         });
-
     }
 
     public int checkUser(String email, int pin) {
@@ -30,7 +28,6 @@ public class LoginDA {
                 .where(User_Table.email.eq(email))
                 .and(User_Table.pin.eq(pin)).count();
         return (int) count;
-
     }
 
     public User getUserByNIC(String nic) {
@@ -46,8 +43,6 @@ public class LoginDA {
                                 model.update()).addAll(currentItem).build()).error((transaction,
                                                                                     error) ->
                         singleSubscriber.onError(new Exception("Error"))).success(transaction ->
-                        singleSubscriber.onSuccess("success")).build().execute());
+                        singleSubscriber.onSuccess("Successful")).build().execute());
     }
-
-
 }
