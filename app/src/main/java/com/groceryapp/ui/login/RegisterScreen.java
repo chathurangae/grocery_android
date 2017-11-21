@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.groceryapp.R;
 import com.groceryapp.helpers.PreferenceManager;
@@ -36,6 +37,8 @@ public class RegisterScreen extends BaseActivity {
     EditText pinField;
     @BindView(R.id.pin_verified_field)
     EditText pinVerifiedField;
+    @BindView(R.id.activity_register_screen)
+    RelativeLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +93,7 @@ public class RegisterScreen extends BaseActivity {
                                 new PreferenceManager(this).putUser(currentUser);
                                 goToLoginPage();
                             },
-                            error -> {
-                                Log.v("ERROR", error.getMessage().toString());
-                            });
+                            error -> this.showSnackBar(mainLayout, error.getMessage(), R.color.feed_tab_selected_background));
 
 
         }

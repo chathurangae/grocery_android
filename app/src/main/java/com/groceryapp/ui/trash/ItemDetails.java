@@ -84,17 +84,29 @@ public class ItemDetails extends Fragment {
             quant.requestFocus();
             quant.setError("Please enter Quantity");
         } else {
+            checkItemIsExists(name, Integer.parseInt(currentquant));
+        }
+    }
+
+    private void checkItemIsExists(String name, int quant) {
+        ShoppingList currentCartItem = new ShoppingListDA().getItemsByCode(barCode);
+        if (currentCartItem != null) {
+            currentCartItem.setItemName(name);
+            currentCartItem.setQuantity(quant);
+            shell.persistenceSingle(new ShoppingListDA().updateItem(currentCartItem))
+                    .subscribe(
+                            success -> shell.loadMainContainer(QrFragment.getInstance(1)),
+                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
+                    );
+        } else {
             currentShoppingItem = new ArrayList<>();
-            ShoppingList list = new ShoppingList(barCode, name, Integer.parseInt(currentquant));
+            ShoppingList list = new ShoppingList(barCode, name
+                    , quant);
             currentShoppingItem.add(list);
             shell.persistenceSingle(new ShoppingListDA().saveItems(currentShoppingItem))
                     .subscribe(
-                            success -> {
-                                shell.loadMainContainer(QrFragment.getInstance(2));
-                            },
-                            error -> {
-                                shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                            }
+                            success -> shell.loadMainContainer(QrFragment.getInstance(2)),
+                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
                     );
         }
     }

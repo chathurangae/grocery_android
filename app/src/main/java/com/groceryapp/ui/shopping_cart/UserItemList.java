@@ -13,12 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.groceryapp.R;
-import com.groceryapp.model.GroceryItem;
 import com.groceryapp.model.UserItem;
-import com.groceryapp.persistence.ItemDA;
+
 import com.groceryapp.persistence.UserItemDA;
-import com.groceryapp.ui.admin.ItemListAdapter;
 import com.groceryapp.ui.home.ShellActivity;
+import com.groceryapp.ui.scanner.QrFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +76,7 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
                             currentItemList.addAll(items);
                             onSuccess(items);
                         },
-                        error -> {
-                            shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                        }
+                        error -> shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
                 );
 
 
@@ -120,12 +117,8 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onItemDelete(String barCode) {
         shellActivity.persistenceSingle(new UserItemDA().deleteItem(barCode))
                 .subscribe(
-                        success -> {
-                            getItemList();
-                        },
-                        error -> {
-                            shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                        }
+                        success -> getItemList(),
+                        error -> shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
                 );
 
     }
@@ -133,5 +126,10 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
     @OnClick(R.id.check_out_button)
     void checkout() {
         shellActivity.loadCheckout(tot);
+    }
+
+    @OnClick(R.id.cancel_button)
+    void cancelClick() {
+        shellActivity.loadMainContainer(QrFragment.getInstance(1));
     }
 }
