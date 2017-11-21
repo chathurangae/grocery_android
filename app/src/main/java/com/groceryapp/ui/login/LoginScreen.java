@@ -2,12 +2,11 @@ package com.groceryapp.ui.login;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.groceryapp.R;
 import com.groceryapp.helpers.MarshMallowPermission;
@@ -29,6 +28,8 @@ public class LoginScreen extends BaseActivity {
     EditText emailField;
     @BindView(R.id.pin_field)
     EditText pinField;
+    @BindView(R.id.activity_login_screen)
+    RelativeLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +81,22 @@ public class LoginScreen extends BaseActivity {
 
     @OnClick(R.id.register_text)
     public void register() {
-        launchActivity(RegisterScreen.class);
-        LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
+        if (emailField.getText().toString().equals("admin@groceryapp.com")) {
+            this.showSnackBar(mainLayout, "Contact Developer", R.color.feed_tab_selected_background);
+        } else {
+            launchActivity(RegisterScreen.class);
+            LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
+        }
     }
 
     @OnClick(R.id.forgot_pw_text)
     public void forgotPin() {
-        launchActivity(ForgotPin.class);
-        LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
+        if (emailField.getText().toString().equals("admin@groceryapp.com")) {
+            this.showSnackBar(mainLayout, "Contact Developer", R.color.feed_tab_selected_background);
+        } else {
+            launchActivity(ForgotPin.class);
+            LoginScreen.this.overridePendingTransition(R.anim.forward_in, R.anim.forward_out);
+        }
     }
 
 

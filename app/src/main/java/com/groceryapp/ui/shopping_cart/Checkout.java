@@ -4,6 +4,7 @@ package com.groceryapp.ui.shopping_cart;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import com.groceryapp.R;
 import com.groceryapp.helpers.DateFormatter;
 import com.groceryapp.model.ShoppingCart;
 import com.groceryapp.persistence.CartDA;
+import com.groceryapp.ui.home.HomeFragment;
 import com.groceryapp.ui.home.ShellActivity;
+import com.groceryapp.ui.scanner.QrFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,12 @@ public class Checkout extends Fragment {
     TextView date;
     @BindView(R.id.total_field)
     EditText totalField;
+    @BindView(R.id.card_no_field)
+    EditText cardNo;
+    @BindView(R.id.date_field)
+    EditText dateField;
+    @BindView(R.id.pin_field)
+    EditText pin;
 
     public static Checkout newInstance(String total) {
         Checkout fragment = new Checkout();
@@ -86,21 +95,33 @@ public class Checkout extends Fragment {
 
     @OnClick(R.id.confirm_button)
     void confirm() {
-        List<ShoppingCart> cartList = new ArrayList<>();
-        ShoppingCart cart = new ShoppingCart(invoice.getText().toString(),
-                date.getText().toString(), Double.parseDouble(total));
-        cartList.add(cart);
+        if (TextUtils.isEmpty(cardNo.getText().toString().trim())) {
+            cardNo.requestFocus();
+            cardNo.setError("Please Add valid card");
+        } else if (TextUtils.isEmpty(dateField.getText().toString().trim())) {
+            dateField.requestFocus();
+            dateField.setError("Please enter Exp. Date");
+        } else if (TextUtils.isEmpty(pin.getText().toString().trim())) {
+            pin.requestFocus();
+            pin.setError("Please enter Pin");
+        } else {
+            List<ShoppingCart> cartList = new ArrayList<>();
+            ShoppingCart cart = new ShoppingCart(invoice.getText().toString(),
+                    date.getText().toString(), Double.parseDouble(total));
+            cartList.add(cart);
 
-        shell.persistenceSingle(new CartDA().saveItems(cartList))
-                .subscribe(
-                        success -> {
-                            shell.showSnackBar("Success", R.color.feed_complete_dot);
-                        },
-                        error -> {
-                            shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                        }
-                );
+            shell.persistenceSingle(new CartDA().saveItems(cartList))
+                    .subscribe(
+                            success -> shell.loadMainContainer(new HomeFragment()),
+                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
+                    );
 
+        }
+    }
+
+    @OnClick(R.id.cancel_button)
+    void cancel() {
+        shell.loadMainContainer(QrFragment.getInstance(1));
     }
 
 }

@@ -18,7 +18,7 @@ import com.groceryapp.model.GroceryItem;
 import com.groceryapp.model.UserItem;
 import com.groceryapp.persistence.ItemDA;
 import com.groceryapp.persistence.UserItemDA;
-import com.groceryapp.ui.admin.ItemList;
+
 import com.groceryapp.ui.home.ShellActivity;
 import com.groceryapp.ui.scanner.QrFragment;
 
@@ -93,7 +93,7 @@ public class ItemDetail extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String text = charSequence.toString();
-                if (text != null && !text.isEmpty()) {
+                if (!text.isEmpty()) {
                     int quant = Integer.parseInt(charSequence.toString());
                     checkPrice(quant);
                 } else {
@@ -113,19 +113,31 @@ public class ItemDetail extends Fragment {
 
     @OnClick(R.id.add_button)
     void buttonAdd() {
-        currrentList = new ArrayList<>();
-        UserItem item = new UserItem(barCode, itemName.getText().toString(), Double.parseDouble(total.getText().toString())
-                , currentQuant, DateFormatter.getCurrentDate());
-        currrentList.add(item);
-        shell.persistenceSingle(new UserItemDA().saveItems(currrentList))
-                .subscribe(
-                        success -> {
-                            shell.loadMainContainer(QrFragment.getInstance(1));
-                        },
-                        error -> {
-                            shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                        });
 
+        checkItemIsExists();
+    }
+
+    private void checkItemIsExists() {
+        UserItem currentCartItem = new UserItemDA().getItemsByCode(barCode);
+        if (currentCartItem != null) {
+            currentCartItem.setPrice(Double.parseDouble(total.getText().toString()));
+            currentCartItem.setQuantity(currentQuant);
+            shell.persistenceSingle(new UserItemDA().updateItem(currentCartItem))
+                    .subscribe(
+                            success -> shell.loadMainContainer(QrFragment.getInstance(1)),
+                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
+                    );
+        } else {
+            currrentList = new ArrayList<>();
+            UserItem item = new UserItem(barCode, itemName.getText().toString(),
+                    Double.parseDouble(total.getText().toString())
+                    , currentQuant, DateFormatter.getCurrentDate());
+            currrentList.add(item);
+            shell.persistenceSingle(new UserItemDA().saveItems(currrentList))
+                    .subscribe(
+                            success -> shell.loadMainContainer(QrFragment.getInstance(1)),
+                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background));
+        }
     }
 
     @OnClick(R.id.cancel_button)

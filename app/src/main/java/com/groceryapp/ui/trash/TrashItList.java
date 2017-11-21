@@ -3,11 +3,7 @@ package com.groceryapp.ui.trash;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -126,11 +122,11 @@ public class TrashItList extends Fragment implements SwipeRefreshLayout.OnRefres
             shellActivity.persistenceSingle(new ShoppingListDA().saveItems(currentShoppingItem))
                     .subscribe(
                             success -> {
+                                itemName.setText("");
+                                quantity.setText("");
                                 onRefresh();
                             },
-                            error -> {
-                                shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                            }
+                            error -> shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
                     );
         }
     }
@@ -146,12 +142,8 @@ public class TrashItList extends Fragment implements SwipeRefreshLayout.OnRefres
     public void onItemDelete(String barCode) {
         shellActivity.persistenceSingle(new ShoppingListDA().deleteItem(barCode))
                 .subscribe(
-                        success -> {
-                            getItemList();
-                        },
-                        error -> {
-                            shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                        }
+                        success -> getItemList(),
+                        error -> shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
                 );
     }
 }

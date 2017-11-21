@@ -1,11 +1,11 @@
 package com.groceryapp.persistence;
 
 
-
 import com.groceryapp.model.ShoppingList;
 import com.groceryapp.model.ShoppingList_Table;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTransaction;
 
 import java.util.List;
@@ -39,6 +39,22 @@ public class ShoppingListDA {
                 singleSubscriber.onError(e);
             }
         });
+    }
+
+    public ShoppingList getItemsByCode(String code) {
+        return SQLite.select().from(ShoppingList.class).where(ShoppingList_Table
+                .barCodeId.eq(code)).querySingle();
+    }
+
+    public Single<String> updateItem(ShoppingList currentItem) {
+        return Single.create(singleSubscriber -> FlowManager.getDatabase(ShoppingList.class)
+                .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
+                        (ProcessModelTransaction.ProcessModel<BaseModel>) (model,
+                                                                           databaseWrapper) ->
+                                model.update()).addAll(currentItem).build()).error((transaction,
+                                                                                    error) ->
+                        singleSubscriber.onError(new Exception("Error"))).success(transaction ->
+                        singleSubscriber.onSuccess("success")).build().execute());
     }
 
     public Single<List<ShoppingList>> getAllItems() {
