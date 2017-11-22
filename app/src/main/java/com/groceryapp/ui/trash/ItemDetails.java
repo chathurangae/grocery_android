@@ -92,7 +92,7 @@ public class ItemDetails extends Fragment {
         ShoppingList currentCartItem = new ShoppingListDA().getItemsByCode(barCode);
         if (currentCartItem != null) {
             currentCartItem.setItemName(name);
-            currentCartItem.setQuantity(quant);
+            currentCartItem.setQuantity((currentCartItem.getQuantity() + quant));
             shell.persistenceSingle(new ShoppingListDA().updateItem(currentCartItem))
                     .subscribe(
                             success -> shell.loadMainContainer(QrFragment.getInstance(1)),

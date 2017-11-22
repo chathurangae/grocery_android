@@ -90,7 +90,7 @@ public class ForgotPin extends BaseActivity {
             User crntUser = new LoginDA().getUserByNIC(userNic);
             if (crntUser != null) {
                 crntUser.setPin(Integer.parseInt(newpin));
-                this.persistenceSingle(new LoginDA().saveUser(crntUser))
+                this.persistenceSingle(new LoginDA().updateUser(crntUser))
                         .subscribe(
                                 success -> {
                                     onBackPressed();

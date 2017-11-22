@@ -121,7 +121,7 @@ public class ItemDetail extends Fragment {
         UserItem currentCartItem = new UserItemDA().getItemsByCode(barCode);
         if (currentCartItem != null) {
             currentCartItem.setPrice(Double.parseDouble(total.getText().toString()));
-            currentCartItem.setQuantity(currentQuant);
+            currentCartItem.setQuantity((currentCartItem.getQuantity()+currentQuant));
             shell.persistenceSingle(new UserItemDA().updateItem(currentCartItem))
                     .subscribe(
                             success -> shell.loadMainContainer(QrFragment.getInstance(1)),

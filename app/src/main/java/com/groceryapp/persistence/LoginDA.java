@@ -39,7 +39,7 @@ public class LoginDA {
     }
 
     public Single<String> updateUser(User currentItem) {
-        return Single.create(singleSubscriber -> FlowManager.getDatabase(User.class)
+        return Single.create(singleSubscriber -> FlowManager.getDatabase(GroceryDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         (ProcessModelTransaction.ProcessModel<BaseModel>) (model,
                                                                            databaseWrapper) ->

@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 import com.groceryapp.R;
 import com.groceryapp.model.GroceryItem;
+import com.groceryapp.model.UserItem;
 import com.groceryapp.persistence.ItemDA;
+import com.groceryapp.persistence.UserItemDA;
 import com.groceryapp.ui.admin.AdminHome;
 import com.groceryapp.ui.home.ShellActivity;
 
