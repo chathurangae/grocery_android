@@ -207,4 +207,9 @@ public class ShellActivity extends BaseActivity
             drawerClosed();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

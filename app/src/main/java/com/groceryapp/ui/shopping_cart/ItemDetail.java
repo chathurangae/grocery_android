@@ -149,7 +149,8 @@ public class ItemDetail extends Fragment {
         currentQuant = quant;
         if (currentItem.getDiscountRate() == 0) {
             Double currentPrice = (currentItem.getPrice() * quant);
-            total.setText(currentPrice.toString());
+            total.setText(
+                    currentPrice.toString());
 
         } else {
             Double currentPrice = (discountPrice * quant);
@@ -160,21 +161,25 @@ public class ItemDetail extends Fragment {
 
     private void getItem() {
         currentItem = new ItemDA().getItemsByCode(barCode);
-        itemName.setText(currentItem.getItemName());
-        if (currentItem.getDiscountRate() == 0) {
-            discountText.setVisibility(View.GONE);
-            price.setText(String.valueOf(currentItem.getPrice()));
-        } else {
-            discountText.setVisibility(View.VISIBLE);
-            int discount = currentItem.getDiscountRate();
-            Double currentPrice = currentItem.getPrice();
-            discountPrice = currentPrice - ((currentPrice * discount) / 100);
-            price.setText(String.valueOf(discountPrice));
-            discountText.setText(" including " + String.valueOf(discount) + "% discount");
-        }
+        if (currentItem != null) {
+            itemName.setText(currentItem.getItemName());
+            if (currentItem.getDiscountRate() == 0) {
+                discountText.setVisibility(View.GONE);
+                price.setText(String.valueOf(currentItem.getPrice()));
+            } else {
+                discountText.setVisibility(View.VISIBLE);
+                int discount = currentItem.getDiscountRate();
+                Double currentPrice = currentItem.getPrice();
+                discountPrice = currentPrice - ((currentPrice * discount) / 100);
+                price.setText(String.valueOf(discountPrice));
+                discountText.setText(" including " + String.valueOf(discount) + "% discount");
+            }
 
-        quant.setText("1");
-        checkPrice(1);
+            quant.setText("1");
+            checkPrice(1);
+        } else {
+            shell.showSnackBar("No Item Found", R.color.feed_tab_selected_background);
+        }
 
 
     }
