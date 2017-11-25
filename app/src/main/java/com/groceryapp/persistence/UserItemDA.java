@@ -43,7 +43,7 @@ public class UserItemDA {
     }
 
     public Single<String> updateItem(UserItem currentItem) {
-        return Single.create(singleSubscriber -> FlowManager.getDatabase(UserItem.class)
+        return Single.create(singleSubscriber -> FlowManager.getDatabase(GroceryDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         (ProcessModelTransaction.ProcessModel<BaseModel>) (model,
                                                                            databaseWrapper) ->

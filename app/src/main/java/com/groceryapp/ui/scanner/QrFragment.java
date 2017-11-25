@@ -16,8 +16,13 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.groceryapp.R;
+import com.groceryapp.model.GroceryItem;
+import com.groceryapp.model.UserItem;
+import com.groceryapp.persistence.ItemDA;
+import com.groceryapp.persistence.UserItemDA;
 import com.groceryapp.ui.admin.AdminHome;
 import com.groceryapp.ui.home.ShellActivity;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
@@ -107,15 +112,28 @@ public class QrFragment extends Fragment
     @Override
     public void handleResult(Result result) {
         final String result1 = result.getText();
+        GroceryItem currentItem = new ItemDA().getItemsByCode(result1);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Scan Result");
         builder.setPositiveButton("OK", (dialog, which) -> {
             if (admin != null) {
-                admin.loadFragment(result1, 0);
+                if (currentItem != null) {
+                    admin.showSnackBar("Item Already Added", R.color.feed_tab_selected_background);
+                    mScannerView.resumeCameraPreview(QrFragment.this);
+                } else {
+                    admin.loadFragment(result1, 0);
+                }
+
             }
             if (shell != null) {
                 if (itemtype == 1) {
-                    shell.loadFragment(result1);
+                    if (currentItem == null) {
+                        shell.showSnackBar("Item Not Exists", R.color.feed_tab_selected_background);
+                        mScannerView.resumeCameraPreview(QrFragment.this);
+                    } else {
+                        shell.loadFragment(result1);
+                    }
+
                 } else {
                     shell.loadTrash(result1);
                 }
@@ -126,7 +144,11 @@ public class QrFragment extends Fragment
             mScannerView.resumeCameraPreview(QrFragment.this);
 
         });
-        builder.setMessage(result.getText());
+        if (currentItem != null) {
+            builder.setMessage(currentItem.getItemName());
+        } else {
+            builder.setMessage(result.getText());
+        }
         AlertDialog alert1 = builder.create();
         alert1.show();
     }

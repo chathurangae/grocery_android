@@ -47,7 +47,7 @@ public class ShoppingListDA {
     }
 
     public Single<String> updateItem(ShoppingList currentItem) {
-        return Single.create(singleSubscriber -> FlowManager.getDatabase(ShoppingList.class)
+        return Single.create(singleSubscriber -> FlowManager.getDatabase(GroceryDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         (ProcessModelTransaction.ProcessModel<BaseModel>) (model,
                                                                            databaseWrapper) ->
