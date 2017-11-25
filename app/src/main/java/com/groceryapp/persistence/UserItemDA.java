@@ -67,4 +67,16 @@ public class UserItemDA {
             }
         });
     }
+
+    public Single<String> deleteAllItem() {
+        return Single.create(singleSubscriber -> {
+            try {
+                SQLite.delete().from(UserItem.class).async().execute();
+                singleSubscriber.onSuccess("Successful");
+            } catch (Exception e) {
+                singleSubscriber.onError(e);
+            }
+        });
+    }
+
 }

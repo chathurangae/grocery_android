@@ -73,8 +73,10 @@
                 android:ems="10"
                 android:hint="Card No"
                 android:inputType="number"
+                android:maxLength="16"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />
+
 
             <EditText
                 android:id="@+id/date_field"
@@ -100,11 +102,12 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edtext_bg"
                 android:ems="10"
-                android:hint="Pin"
+                android:hint="CVV"
                 android:inputType="number"
-                android:maxLength="10"
+                android:maxLength="3"
                 android:padding="10dp"
                 android:textColorHint="@color/texthint" />
+
 
             <EditText
                 android:id="@+id/total_field"

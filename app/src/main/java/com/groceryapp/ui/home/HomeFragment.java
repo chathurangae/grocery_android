@@ -91,10 +91,13 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemSelect {
                 R.drawable.ic_shopping_cart,
                 R.drawable.ic_shopping_list,
                 R.drawable.ic_history,
-                R.drawable.ic_trash_it
+                R.drawable.ic_trash_it,
+                R.drawable.ic_add_shopping_cart,
+                R.drawable.ic_logout
+
         };
 
-        Home a = new Home("Shopping Cart", covers[0]);
+        Home a = new Home("Add to Cart", covers[4]);
         homeList.add(a);
 
         a = new Home("Shopping List", covers[1]);
@@ -105,6 +108,13 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemSelect {
 
         a = new Home("Trash It", covers[3]);
         homeList.add(a);
+
+        a = new Home("Cart", covers[0]);
+        homeList.add(a);
+
+        a = new Home("Logout", covers[5]);
+        homeList.add(a);
+
         adapter.notifyDataSetChanged();
     }
 
@@ -141,15 +151,18 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemSelect {
 
     @Override
     public void onItemSelect(String name) {
-        if (name.equals("Shopping Cart")) {
-            shellActivity.loadMainContainer(new UserItemList());
+        if (name.equals("Add to Cart")) {
+            shellActivity.loadMainContainer(QrFragment.getInstance(1));
         } else if (name.equals("Shopping List")) {
             shellActivity.loadMainContainer(new TrashItList());
-
         } else if (name.equals("History")) {
             shellActivity.loadMainContainer(new HistroyList());
-        } else {
+        } else if (name.equals("Trash It")) {
             shellActivity.loadMainContainer(QrFragment.getInstance(2));
+        } else if (name.equals("Cart")) {
+            shellActivity.loadMainContainer(new UserItemList());
+        } else {
+            shellActivity.signout();
         }
 
     }

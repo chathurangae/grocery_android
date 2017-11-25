@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.groceryapp.R;
+import com.groceryapp.helpers.PreferenceManager;
+import com.groceryapp.model.User;
 import com.groceryapp.ui.BaseActivity;
 import com.groceryapp.ui.histroy.HistroyList;
 import com.groceryapp.ui.login.LoginScreen;
@@ -75,6 +77,7 @@ public class ShellActivity extends BaseActivity
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        User currentUser = new PreferenceManager(this).getUser();
         userImage.setVisibility(View.GONE);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -82,6 +85,7 @@ public class ShellActivity extends BaseActivity
         headerView = navigationView.getHeaderView(0);
         headerAvatar = ButterKnife.findById(headerView, R.id.header_profile_image);
         headerUsername = ButterKnife.findById(headerView, R.id.header_username);
+        headerUsername.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         menu = navigationView.getMenu();
         if (((ViewGroup.MarginLayoutParams) frameLayout
                 .getLayoutParams()).leftMargin == (int) getResources()
@@ -140,7 +144,7 @@ public class ShellActivity extends BaseActivity
         if (id == R.id.nav_trash) {
             loadMainContainer(QrFragment.getInstance(2));
         }
-        if (id == R.id.nav_cart) {
+        if (id == R.id.nav_add_cart) {
             loadMainContainer(QrFragment.getInstance(1));
         }
         if (id == R.id.nav_list) {

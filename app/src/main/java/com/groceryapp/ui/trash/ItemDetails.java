@@ -83,6 +83,9 @@ public class ItemDetails extends Fragment {
         } else if (TextUtils.isEmpty(currentquant)) {
             quant.requestFocus();
             quant.setError("Please enter Quantity");
+        } else if (currentquant.equals("0")) {
+            quant.requestFocus();
+            quant.setError("Invalid Quantity");
         } else {
             checkItemIsExists(name, Integer.parseInt(currentquant));
         }

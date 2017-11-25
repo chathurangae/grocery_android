@@ -53,7 +53,7 @@
                             android:background="@drawable/edtext_bg"
                             android:ems="10"
                             android:gravity="center"
-                            android:hint="Date"
+                            android:hint="Select Date"
                             android:inputType="date"
                             android:padding="10dp"
                             android:textColorHint="@color/texthint" />
@@ -66,8 +66,8 @@
                             android:layout_marginEnd="5dp"
                             android:layout_marginStart="10dp"
                             android:layout_weight="1.5"
-                            android:gravity="center"
-                            android:text="Search" />
+                            android:drawableBottom="@drawable/ic_search_black"
+                            android:gravity="center" />
 
 
                     </LinearLayout>

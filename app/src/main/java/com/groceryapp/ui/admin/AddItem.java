@@ -70,6 +70,11 @@ public class AddItem extends Fragment {
         } else if (TextUtils.isEmpty(price)) {
             priceField.requestFocus();
             priceField.setError("Required Field");
+        } else if (!dicount.equals("")) {
+            if (Integer.parseInt(dicount) > 90) {
+                discountField.requestFocus();
+                discountField.setError("Discount Less than 90%");
+            }
         } else {
             ItemOperation();
 
