@@ -44,13 +44,23 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/love_music"
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/backdrop_title"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/backdrop_title"/>
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_splash_logo"
+                        android:id="@+id/homeView"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="11dp" />
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/love_music"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/backdrop_title"-->
+                        <!--android:textColor="@android:color/white"-->
+                        <!--android:textSize="@dimen/backdrop_title"/>-->
 
 
 
