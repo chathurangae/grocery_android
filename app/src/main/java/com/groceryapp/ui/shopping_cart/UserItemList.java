@@ -117,7 +117,7 @@ public class UserItemList extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onItemDelete(String barCode) {
         shellActivity.persistenceSingle(new UserItemDA().deleteItem(barCode))
                 .subscribe(
-                        success -> getItemList(),
+                        success -> onRefresh(),
                         error -> shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
                 );
 

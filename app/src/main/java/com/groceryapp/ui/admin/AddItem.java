@@ -70,6 +70,8 @@ public class AddItem extends Fragment {
             if (Integer.parseInt(discount) > 90) {
                 discountField.requestFocus();
                 discountField.setError("Discount Less than 90%");
+            } else {
+                ItemOperation();
             }
         } else {
             ItemOperation();
@@ -88,12 +90,8 @@ public class AddItem extends Fragment {
 
             admin.persistenceSingle(new ItemDA().saveItems(itemList))
                     .subscribe(
-                            success -> {
-                                admin.loadQRFragment();
-                            },
-                            error -> {
-                                admin.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
-                            });
+                            success -> admin.loadQRFragment(),
+                            error -> admin.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background));
         } else if (itemtype == 1) {
             if (discount.equals("")) {
                 discount = "0";

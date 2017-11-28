@@ -111,7 +111,7 @@ public class QrFragment extends Fragment
 
     @Override
     public void handleResult(Result result) {
-        final String result1 = result.getText();
+        final String result1 = result.getText().trim();
         GroceryItem currentItem = new ItemDA().getItemsByCode(result1);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Scan Result");
