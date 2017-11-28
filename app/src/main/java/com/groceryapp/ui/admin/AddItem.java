@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.groceryapp.R;
-import com.groceryapp.helpers.PreferenceManager;
-import com.groceryapp.helpers.ValidationHelper;
 import com.groceryapp.model.GroceryItem;
 import com.groceryapp.persistence.ItemDA;
-import com.groceryapp.persistence.LoginDA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +41,7 @@ public class AddItem extends Fragment {
     TextView heading;
     List<GroceryItem> itemList;
     private AdminHome admin;
-    private String barCode, itemName, price, dicount;
+    private String barCode, itemName, price, discount;
     private int itemtype;
     private GroceryItem currentItem;
 
@@ -63,13 +59,18 @@ public class AddItem extends Fragment {
     void addItem() {
         itemName = itemNameField.getText().toString().trim();
         price = priceField.getText().toString().trim();
-        dicount = discountField.getText().toString().trim();
+        discount = discountField.getText().toString().trim();
         if (TextUtils.isEmpty(itemName)) {
             itemNameField.requestFocus();
             itemNameField.setError("Required Field");
         } else if (TextUtils.isEmpty(price)) {
             priceField.requestFocus();
             priceField.setError("Required Field");
+        } else if (!discount.equals("")) {
+            if (Integer.parseInt(discount) > 90) {
+                discountField.requestFocus();
+                discountField.setError("Discount Less than 90%");
+            }
         } else {
             ItemOperation();
 
@@ -78,11 +79,11 @@ public class AddItem extends Fragment {
 
     private void ItemOperation() {
         if (itemtype == 0) {
-            if (dicount.equals("")) {
-                dicount = "0";
+            if (discount.equals("")) {
+                discount = "0";
             }
             GroceryItem item = new GroceryItem(barCode, itemName, Double.parseDouble(price)
-                    , Integer.parseInt(dicount));
+                    , Integer.parseInt(discount));
             itemList.add(item);
 
             admin.persistenceSingle(new ItemDA().saveItems(itemList))
@@ -94,10 +95,10 @@ public class AddItem extends Fragment {
                                 admin.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
                             });
         } else if (itemtype == 1) {
-            if (dicount.equals("")) {
-                dicount = "0";
+            if (discount.equals("")) {
+                discount = "0";
             }
-            currentItem.setDiscountRate(Integer.parseInt(dicount));
+            currentItem.setDiscountRate(Integer.parseInt(discount));
             currentItem.setItemName(itemName);
             currentItem.setPrice(Double.parseDouble(price));
             admin.persistenceSingle(new ItemDA().updateItem(currentItem))

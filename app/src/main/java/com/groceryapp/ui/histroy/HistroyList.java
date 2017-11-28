@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.groceryapp.R;
 import com.groceryapp.model.ShoppingCart;
 import com.groceryapp.persistence.CartDA;
@@ -23,9 +25,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
-public class HistroyList extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HistroyList extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+        com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener {
 
     private ShellActivity shellActivity;
     @BindView(R.id.item_recycler_view)
@@ -37,7 +41,8 @@ public class HistroyList extends Fragment implements SwipeRefreshLayout.OnRefres
     private HistroyAdapter listAdapter;
     private List<ShoppingCart> currentItemList;
     @BindView(R.id.item_date_field)
-    EditText itemName;
+    EditText dateField;
+    private com.fourmob.datetimepicker.date.DatePickerDialog datePickerDialog;
 
 
     public HistroyList() {
@@ -60,9 +65,37 @@ public class HistroyList extends Fragment implements SwipeRefreshLayout.OnRefres
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerItemList.setLayoutManager(linearLayoutManager);
+
+        dateField.setKeyListener(null);
+        dateField.setFocusable(false);
+        dateField.setClickable(false);
+        initPicker();
         getItemList();
 
         return view;
+    }
+
+    private void initPicker() {
+        datePickerDialog =
+                com.fourmob.datetimepicker.date.DatePickerDialog.newInstance(this, 2017, 11, 25);
+        datePickerDialog.setYearRange(2017, 2030);
+        datePickerDialog.setVibrate(true);
+        datePickerDialog.setCloseOnSingleTapDay(true);
+    }
+
+    @OnClick(R.id.done_button)
+    void serchButton() {
+        if (TextUtils.isEmpty(dateField.getText().toString().trim())) {
+            shellActivity.showSnackBar("Please select Date", R.color.feed_tab_selected_background);
+        } else {
+            serchDate(dateField.getText().toString().trim());
+
+        }
+    }
+
+    @OnClick(R.id.item_date_field)
+    void openDatePicker() {
+        datePickerDialog.show(getActivity().getSupportFragmentManager(), "TAG");
     }
 
     private void getItemList() {
@@ -105,5 +138,28 @@ public class HistroyList extends Fragment implements SwipeRefreshLayout.OnRefres
     public void onRefresh() {
         listAdapter.clear();
         getItemList();
+    }
+
+    private void serchDate(String serchdDate) {
+        shellActivity.persistenceSingle(new CartDA().getItemsByDate(serchdDate))
+                .subscribe(
+                        items -> {
+                            listAdapter.clear();
+                            currentItemList = new ArrayList<>();
+                            currentItemList.addAll(items);
+                            onSuccess(items);
+                        },
+                        error -> {
+                            shellActivity.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background);
+                        }
+                );
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+        String serchdDate = (year + "-" + (month + 1) + "-" + day);
+        dateField.setText(serchdDate);
+        serchDate(serchdDate);
+
     }
 }

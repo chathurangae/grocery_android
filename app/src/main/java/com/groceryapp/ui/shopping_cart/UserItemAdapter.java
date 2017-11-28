@@ -48,7 +48,7 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.ItemLi
         holder.itemPrice.setText(String.valueOf(item.getPrice()) + " Rs");
         holder.itemId.setText(item.getBarCodeId());
         holder.itemQuant.setText(String.valueOf(item.getQuantity()));
-        holder.delete.setBackgroundResource(R.drawable.ic_delete);
+        holder.delete.setBackgroundResource(R.drawable.ic_remove_shopping_cart);
 
         holder.delete.setOnClickListener(v -> {
             onItemDelete.onItemDelete(item.getBarCodeId());

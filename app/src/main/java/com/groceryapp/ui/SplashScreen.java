@@ -35,7 +35,5 @@ public class SplashScreen extends BaseActivity {
 
         };
         logoTimer.start();
-
-
     }
 }

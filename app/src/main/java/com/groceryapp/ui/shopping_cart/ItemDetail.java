@@ -118,25 +118,29 @@ public class ItemDetail extends Fragment {
     }
 
     private void checkItemIsExists() {
-        UserItem currentCartItem = new UserItemDA().getItemsByCode(barCode);
-        if (currentCartItem != null) {
-            currentCartItem.setPrice(Double.parseDouble(total.getText().toString()));
-            currentCartItem.setQuantity((currentCartItem.getQuantity()+currentQuant));
-            shell.persistenceSingle(new UserItemDA().updateItem(currentCartItem))
-                    .subscribe(
-                            success -> shell.loadMainContainer(QrFragment.getInstance(1)),
-                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
-                    );
+        if (currentQuant != 0) {
+            UserItem currentCartItem = new UserItemDA().getItemsByCode(barCode);
+            if (currentCartItem != null) {
+                currentCartItem.setPrice(Double.parseDouble(total.getText().toString()));
+                currentCartItem.setQuantity((currentCartItem.getQuantity() + currentQuant));
+                shell.persistenceSingle(new UserItemDA().updateItem(currentCartItem))
+                        .subscribe(
+                                success -> shell.loadMainContainer(QrFragment.getInstance(1)),
+                                error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background)
+                        );
+            } else {
+                currrentList = new ArrayList<>();
+                UserItem item = new UserItem(barCode, itemName.getText().toString(),
+                        Double.parseDouble(total.getText().toString())
+                        , currentQuant, DateFormatter.getCurrentDate());
+                currrentList.add(item);
+                shell.persistenceSingle(new UserItemDA().saveItems(currrentList))
+                        .subscribe(
+                                success -> shell.loadMainContainer(QrFragment.getInstance(1)),
+                                error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background));
+            }
         } else {
-            currrentList = new ArrayList<>();
-            UserItem item = new UserItem(barCode, itemName.getText().toString(),
-                    Double.parseDouble(total.getText().toString())
-                    , currentQuant, DateFormatter.getCurrentDate());
-            currrentList.add(item);
-            shell.persistenceSingle(new UserItemDA().saveItems(currrentList))
-                    .subscribe(
-                            success -> shell.loadMainContainer(QrFragment.getInstance(1)),
-                            error -> shell.showSnackBar(error.getMessage(), R.color.feed_tab_selected_background));
+            shell.showSnackBar("Invalid Quantity", R.color.feed_tab_selected_background);
         }
     }
 

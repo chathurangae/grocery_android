@@ -23,7 +23,7 @@ public class CartDA {
                 .error((transaction, error) -> singleSubscriber
                         .onError(new Exception(error.toString())))
                 .success(transaction -> singleSubscriber
-                        .onSuccess("success")).build().execute());
+                        .onSuccess("Successful")).build().execute());
     }
 
     public Single<List<ShoppingCart>> getItemsByDate(String date) {
